@@ -1,0 +1,54 @@
+{% extends 'myadmin/base.html' %}
+{% load static from staticfiles %}
+{% block search %}
+	<form class="navbar-search pull-left" action="">
+        <input type="text" class="search-query span2" placeholder="Search" />
+        <input style='border:none;' type="submit" value="搜索"/>
+    </form>
+{% endblock %}
+{% block content %}
+	
+	    <!-- 主体开始 -->
+	    <h3>
+	       LaLa小商城
+	    </h3>
+	    <div class="hero-unit" style="height:230px;">
+	    	<div style='float:left;margin-right:50px; ' >
+	         <img src="{% static 'myadmin/img/ht.jpg' %}" alt="">
+	        </div>
+	        <div>
+	        	<span>{{indexlist.name}}</span><br>
+	        	<span>欢迎您回来！</span>
+	        </div>
+	        <div style="float:left;margin:30px 80px;">
+	        <p>
+	           账号：<span>{{indexlist.username}}</span>
+	        </p>
+	        <p>
+	           管理员：<span>{{indexlist.name}}</span>
+	        </p>
+	        <p>
+	           管理员邮箱：<span>{{indexlist.email}}</span>
+	        </p>
+	       </div>
+
+	    </div>
+	    <div class="well summary">
+	        <ul>
+	            <li>
+	                <a href="#"><span class="count">{{userslist}}</span>会员数</a>
+	            </li>
+	            <li>
+	                <a href="#"><span class="count">{{typeslist}}</span> 类别数</a>
+	            </li>
+	            <li>
+	                <a href="#"><span class="count">{{goodslist}}</span>商品数</a>
+	            </li>
+	            <li class="last">
+	                <a href="#"><span class="count">{{orderslist}}</span> 订单数</a>
+	            </li>
+	        </ul>
+	   	</div>
+	    <!-- 主体结束 -->
+	
+{% endblock %}

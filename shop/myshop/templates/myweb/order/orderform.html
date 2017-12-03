@@ -1,0 +1,126 @@
+{% extends 'myweb/base.html' %}
+{% load static from staticfiles %}
+
+{% block mylink %}
+	<link rel="stylesheet" type="text/css" href="{% static 'myweb/public/css/cart.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'myweb/public/css/cart-app.css' %}">
+{% endblock %}
+<hr>
+{% block content %}
+	
+	<center>
+	<h3 style="margin-top:100px;">
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	&nbsp;&nbsp;
+	收货地址管理
+	</h3>
+	<hr>
+	</center>
+		<div class="col-md-offset-3 col-md-9">
+			<form id="edit-profile" action="{% url 'order_affirm' %}" class="form-horizontal col-md-6 col-md-offset-1" method="post">
+			{% csrf_token %}
+
+            <fieldset>
+                <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-2 control-label">收件人</label>
+                     <div class="col-sm-10">
+                       <input type="text" class="form-control" id="inputEmail3" name="name" value="{{request.session.webuser}}">
+                     </div>
+                </div>
+                <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-2 control-label">地址</label>
+                     <div class="col-sm-10">
+                       <input type="text" class="form-control" r id="inputEmail3"  name="address" value="{{request.session.webaddress}}">
+                     </div>
+                </div>
+                <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-2 control-label">邮编</label>
+                     <div class="col-sm-10">
+                       <input type="text" class="form-control" id="inputEmail3" name="code" value="{{request.session.webcode}}">
+                     </div>
+                </div>
+                <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-2 control-label">电话</label>
+                     <div class="col-sm-10">
+                       <input type="text" class="form-control" id="inputEmail3" name="phone" value="{{request.session.webphone}}">
+                     </div>
+                </div>
+                <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-2 control-label">总金额</label>
+                     <div class="col-sm-10">
+                       <input type="text" class="form-control" id="inputEmail3" readonly="" value="{{request.session.total}}">
+                     </div>
+                </div>
+                <center>
+               <div class="form-group">
+                   <div class="col-sm-offset-2 col-sm-10">
+                     <button type="submit" class="btn btn-primary">提交订单</button>
+                     <button type="reset" class="btn btn-primary">重置</button>
+                   </div>
+                </div>
+                </center>
+            </fieldset>
+        </form>
+	</div>
+	<div class='col-md-12' style="height:50px;"></div>
+	    <!-- 主内容区域 -->
+	    <div class="mainbody cart" style='background:white;'>
+			<div class="container">
+				<!-- 购物车详情头 -->
+				<table class="cart-header">
+					<tbody>
+						<tr>
+							<td class="cart-col-name col-md-3 hidden-xs hidden-sm">商品图片</td>
+							<td class="cart-col-name col-md-3 hidden-xs hidden-sm">商品</td>
+							<td class="cart-col-price col-md-2 hidden-xs hidden-sm">单价(元)</td>
+							<td class="cart-col-number col-md-2 hidden-xs hidden-sm">数量</td>
+							<td class="cart-col-total col-md-1 hidden-xs hidden-sm">总价(元)</td>
+						</tr>
+					</tbody>
+				</table><!-- 购物车详情头 E-->
+					<!-- 购物清单信息列表 -->
+					<div class="cart-merchant-list">
+						<div class="cart-merchant">
+							<table class="cart-merchant-body">
+								<tbody>
+									{% for shop in request.session.orderlist.values %}			
+									<tr class="cart-product" id="pro3">
+										<td class="cart-col-select col-md-3 col-xs-4 col-sm-4">  
+									
+											<a href="{% url 'myweb_shopdetails' shop.id %}" class="cart-product-link" target="_blank">
+												<img src="/static/myadmin/goods/s_{{ shop.picname }}" class="cart-product-img" alt="{{shop.goods}}">
+											</a>
+										</td>
+										<td class="cart-col-name col-md-3 col-xs-8 col-sm-8">
+											<a href="meilanx.html" class="cart-product-link" target="_blank">
+											  <p>{{ shop.goods }}</p>
+											</a>
+										</td>
+										<td class="cart-col-price col-md-2 hidden-xs hidden-sm">
+											<p>
+												<span class="cart-product-price">{{ shop.price }}</span>
+											</p>
+										</td>
+										<td class="cart-col-number col-md-2 hidden-xs hidden-sm">
+											<div class="cart-product-number-adder">
+												<!-- <p class="cart-product-number-max show"></p> -->
+													<div class="mz-adder-num">{{shop.num}}</div>
+											</div>
+										</td>
+										<td class="cart-col-total col-md-1 hidden-xs hidden-sm">
+											<span class="cart-product-price total">{% widthratio shop.price 1 shop.num %}</span>
+										</td>
+									</tr>
+									{% endfor %}
+									
+								</tbody>
+							</table>
+						</div>
+					</div><!-- 购物清单信息列表 E-->
+				</div>
+			</div>
+				
+<!-- <div class='col-md-12' style="height:20px;"></div> -->
+
+{% endblock %}

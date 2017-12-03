@@ -1,0 +1,36 @@
+{% extends 'myadmin/base.html' %}
+{% load static from staticfiles %}
+{% block search %}
+	<form class="navbar-search pull-left" action="">
+        <input type="text" class="search-query span2" placeholder="Search" />
+        <input style='border:none;' type="submit" value="搜索"/>
+    </form>
+{% endblock %}
+{% block content %}
+	<h3>
+		商品类别信息管理
+	</h3>
+	<form id="edit-profile" class="form-horizontal" action="{% url 'myadmin_typeinsert' %}" method="POST">
+		<input type="hidden" name='pid' value='{{pid}}'>
+		<input type="hidden" name='path' value='{{path}}'>
+		{% csrf_token %}
+		<fieldset>
+			<legend>添加商品类别信息</legend>
+			<div class="control-group">
+				<label class="control-label" for="input01">父类别名称:</label>
+				<div class="controls">
+					<input type="text" readonly="" name='pname' class="input-xlarge" id="input01" value=""placeholder="{{name}}" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="input01">类别名称:</label>
+				<div class="controls">
+					<input type="text" name='name' class="input-xlarge" id="input01" value="" />
+				</div>
+			</div>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">添加</button> <button class="reset">重置</button>
+			</div>
+		</fieldset>
+	</form>
+{% endblock %}

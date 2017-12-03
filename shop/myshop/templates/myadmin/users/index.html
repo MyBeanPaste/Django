@@ -1,0 +1,63 @@
+
+{% extends 'myadmin/base.html' %}
+{% load static from staticfiles %}
+{% block search %}
+	<form class="navbar-search pull-left" action="{% url 'myadmin_uindex' 1 %}" method="get">
+        <input type="text" class="search-query span2" placeholder="Search" name='name' value="{{request.GET.name}}" />
+        <input style='border:none;' type="submit" value="搜索"/>
+    </form>
+{% endblock %}
+{% block content %}
+	<h4>会员信息管理</h4>
+	
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>账号</th>
+				<th>真是姓名</th>
+				<th>性别</th>
+				<th>邮箱</th>
+				<th>注册时间</th>
+				<th>状态</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for v in userslist %}
+			<tr>
+				<td>{{v.username}}</td>
+				<td>{{v.name}}</td>
+				<td>{% if v.sex == 1 %} 男 {% else %} 女 {% endif %}</td>
+				<td>{{v.email}}</td>
+				<td>{{v.addtime}}</td>
+				<td>{%if v.state == 0 %} 管理员 {% elif v.state == 1 %} 启用 {% elif v.state == 2 %} 禁用 {% endif %}</td>
+				<td>
+					<a href="{% url 'myadmin_udel' v.id %}"class="view-link">删除</a>
+					<a href="{% url 'myadmin_uedit' v.id %}"class="view-link">编辑</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>				
+	<div class="pagination">
+				<ul>
+					<li class="disabled">
+						<a href="#">&laquo;</a>
+					</li>
+					{% for pindex in plist %}
+						{% if pIndex == pindex %}
+					<li class="active">
+						<a href="/myadmin/users/index{{pindex}}?{{where|join:'&'}}">{{pindex}}</a>
+					</li>
+						{% else %}
+					<li>
+						<a href="/myadmin/users/index{{pindex}}?{{where|join:'&'}}">{{pindex}}</a>
+					</li>
+						{% endif %}
+					{% endfor %}
+					<li>
+						<a href="#">&raquo;</a>
+					</li>
+				</ul>
+	</div>
+{% endblock %}

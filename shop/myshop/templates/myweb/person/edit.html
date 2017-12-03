@@ -1,0 +1,80 @@
+{% extends 'myweb/shop/P_base.html' %}
+{% load static from staticfiles %}
+{% block mylink %}
+<script src="{% static 'myweb/public/js/bubbly-bg.js' %}"></script>
+<style type="text/css">
+	.input1{
+		width:300px;
+		height:40px;
+		background: #fff4e6;
+		border:1px solid #fff;
+	}
+</style>
+{% endblock %}
+{% block content %}
+<script type="text/javascript">
+ bubbly({
+       	colorStart: "#fff4e6",
+        colorStop: "#ffe9e4",
+        blur: 1,
+        compose: "source-over",
+        bubbleFunc: () => `hsla(${Math.random() * 50}, 100%, 50%, .3)`
+            });
+</script>
+<center>
+<form id="mainForm" class="main-form" action="{% url 'myweb_update' person.id %}" method="POST">
+    {% csrf_token %}
+	<div class="normalInput cycode-box fieldInput" id="cycode-box">
+	  <div class="cycode-selectbox">
+	  <label>账号:</label>
+	   {{person.username}}
+	</div>
+	<br>
+	<div class="normalInput cycode-box fieldInput" id="cycode-box">
+	  <div class="cycode-selectbox">
+	  	<label>姓名:</label>
+	    <input class="ipt-account inp-focus input1" name="name" id="account" maxlength="50"  autocomplete="off" value="{{person.name}}">
+	  </div>
+	</div>
+	<br>
+	<div class="normalInput cycode-box fieldInput" id="cycode-box">
+	  <div class="cycode-selectbox">
+	  	 <label>地址:</label>
+	    <input class="ipt-account inp-focus input1" name="address" id="account" maxlength="50"  autocomplete="off" value="{{person.address}}">
+	  </div>
+	</div>
+	<br>
+	<div class="normalInput fieldInput passwd-box">
+	  <label>邮编:</label>
+	  <input class="inp-focus input1" name="code" id="account" maxlength="16"  autocomplete="off" value="{{person.code}}" >
+	</div>
+	<br>
+	<div class="normalInput fieldInput passwd-box">
+	  <label>电话:</label>
+	  <input class="inp-focus input1" name="phone" id="account" maxlength="16"  autocomplete="off" value="{{person.phone}}">
+	</div>
+	<br>
+	<div class="normalInput cycode-box fieldInput" id="cycode-box">
+	  <div class="cycode-selectbox">
+	  	<label>邮箱:</label>
+	    <input  class="ipt-account inp-focus input1" name="email" id="account" maxlength="50"  autocomplete="off" value="{{person.email}}">
+	  </div>
+	</div>
+	<br>
+	<div class="control-group">
+	    <div class="controls">
+	    	<label class="control-label" for="input01">性别：</label>
+	        <input type="radio" name="sex" class="input-xlarge" id="input01" value="1" /> 男
+	        <input type="radio" name="sex" class="input-xlarge" id="input01" value="0" /> 女
+	    </div>
+	</div>
+	<br>
+	<span style='color:red'>{{info}}</span>
+	<div class="form-actions">
+        <button type="submit" style='width:100px;background:#fff4e6; border:1px solid #fff; color:black;'class="btn btn-primary">保存</button>
+        <button type="reset" style='width:100px;background:#fff4e6; border:1px solid #fff;color:black;'class="btn btn-primary">重置</button>
+    </div> 
+</form>
+</center>
+
+{% endblock %}

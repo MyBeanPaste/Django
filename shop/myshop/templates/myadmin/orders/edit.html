@@ -1,0 +1,75 @@
+{% extends "myadmin/base.html" %}
+{% block search %}
+    <form class="navbar-search pull-left" action="">
+        <input type="text" class="search-query span2" placeholder="Search" />
+        <input style='border:none;' type="submit" value="搜索"/>
+    </form>
+{% endblock %}
+{% block content %}  
+<center>         
+    <h3>
+        订单信息管理
+    </h3>
+</center>
+    <form id="edit-profile" action="{% url 'myadmin_ordersupdate' orders.id %}" class="form-horizontal" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>编辑订单信息</legend>
+            <div class="control-group">
+                <label class="control-label" for="input01">ID号：</label>
+                <div class="controls">
+                    {{ orders.id }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input01">姓名：</label>
+                <div class="controls">
+                  {{orders.linkman}}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input01">地址：</label>
+                <div class="controls">
+                    {{orders.address}}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input01">邮编：</label>
+                <div class="controls">
+                   {{orders.code}}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input01">电话:</label>
+                <div class="controls">
+                    {{orders.phone}}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input01">下单时间：</label>
+                <div class="controls">
+                   {{orders.addtime}}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input01">总价：</label>
+                <div class="controls">
+                    {{orders.total}}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input01">状态：</label>
+                <div class="controls">
+                    <input type="radio" name="status" class="input-xlarge" id="input01" value="0" /> 新订单 
+                    <input type="radio" name="status" class="input-xlarge" id="input01" value="1" /> 已发货
+                    <input type="radio" name="status" class="input-xlarge" id="input01" value="2" /> 已收货
+                    <input type="radio" name="status" class="input-xlarge" id="input01" value="3" /> 无效订单
+                </div>
+            </div>                        
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">保存</button> <button type="reset" class="btn">重置</button>
+            </div>
+        </fieldset>
+    </form>
+</center>     
+{% endblock %}

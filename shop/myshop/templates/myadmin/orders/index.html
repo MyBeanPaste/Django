@@ -1,0 +1,66 @@
+
+{% extends 'myadmin/base.html' %}
+{% load static from staticfiles %}
+{% block search %}
+	<form class="navbar-search pull-left" action="" method="get">
+        <input type="text" class="search-query span2" placeholder="Search" name='' value="" />
+        <input style='border:none;' type="submit" value="搜索"/>
+    </form>
+{% endblock %}
+{% block content %}
+	<h4>订单信息管理</h4>
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>ID号</th>
+				<th>真实姓名</th>
+				<th>地址</th>
+				<th>邮编</th>
+				<th>电话</th>
+				<th>下单时间</th>
+				<th>总价</th>
+				<th>状态</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for v in orderslist %}
+			<tr>
+				<td>{{v.id}}</td>
+				<td>{{v.linkman}}</td>
+				<td>{{v.address}}</td>
+				<td>{{v.code}}</td>
+				<td>{{v.phone}}</td>
+				<td>{{v.addtime}}</td>
+				<td>{{v.total}}</td>
+				<td>{%if v.status == 0 %} 新订单 {% elif v.status == 1 %} 已发货 {% elif v.status == 2 %} 已收货 {% elif v.status == 3 %} 无效订单 {% endif %}</td>
+				<td>
+					<a href="{% url 'myadmin_ordersedit' v.id %}"class="view-link">编辑</a>
+					<a href="{% url 'myadmin_ordersdetail' v.id %}"class="view-link">查看详情</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>				
+	<div class="pagination">
+				<ul>
+					<li class="disabled">
+						<a href="#">&laquo;</a>
+					</li>
+					{% for pindex in plist %}
+						{% if pIndex == pindex %}
+					<li class="active">
+						<a href="/myadmin/orders/index{{pindex}}?{{where|join:'&'}}">{{pindex}}</a>
+					</li>
+						{% else %}
+					<li>
+						<a href="/myadmin/orders/index{{pindex}}?{{where|join:'&'}}">{{pindex}}</a>
+					</li>
+						{% endif %}
+					{% endfor %}
+					<li>
+						<a href="#">&raquo;</a>
+					</li>
+				</ul>
+	</div>
+{% endblock %}
